@@ -1,0 +1,25 @@
+name: date_time_picker
+description: A Flutter widget to display a date time form field to show a date or clock dialog.
+version: 1.0.0
+homepage: https://github.com/m3uzz/date_time_picker
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  intl: ^0.16.1
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
