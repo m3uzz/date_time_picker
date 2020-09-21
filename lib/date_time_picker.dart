@@ -521,6 +521,7 @@ class _DateTimePickerState extends FormFieldState<String> {
   String _sValue;
   String _sDate = '';
   String _sTime = '';
+  String _sPeriod = '';
 
   @override
   DateTimePicker get widget => super.widget as DateTimePicker;
@@ -548,6 +549,10 @@ class _DateTimePickerState extends FormFieldState<String> {
         _sDate = DateFormat('yyyy-MM-dd').format(_dDate);
         _sTime = DateFormat('HH:mm').format(_dDate);
 
+        if (!widget.use24HourFormat) {
+          _sTime = DateFormat('hh:mm a').format(_dDate);
+        }
+
         _timeLabelController.text = _sTime;
         _dateLabelController.text = _sDate;
 
@@ -559,6 +564,10 @@ class _DateTimePickerState extends FormFieldState<String> {
 
           if (widget.type == DateTimePickerType.dateTime && _sTime != '') {
             lsMask = 'MMM d, yyyy - HH:mm';
+
+            if (!widget.use24HourFormat) {
+              lsMask = 'MMM d, yyyy - hh:mm a';
+            }
           }
 
           _dateLabelController.text = DateFormat(lsMask).format(_dDate);
@@ -568,7 +577,12 @@ class _DateTimePickerState extends FormFieldState<String> {
         _tTime =
             TimeOfDay(hour: int.parse(llTime[0]), minute: int.parse(llTime[1]));
         _sTime = lsValue;
-        _timeLabelController.text = _sTime;
+
+        if (!widget.use24HourFormat) {
+          _sPeriod = _tTime.period.index == 0 ? ' AM' : ' PM';
+        }
+
+        _timeLabelController.text = _sTime + _sPeriod;
       }
     }
   }
@@ -610,6 +624,10 @@ class _DateTimePickerState extends FormFieldState<String> {
             if (lsOldTime != '') {
               _tTime = TimeOfDay.fromDateTime(_dDate);
               _sTime = DateFormat('HH:mm').format(_dDate);
+
+              if (!widget.use24HourFormat) {
+                _sTime = DateFormat('hh:mm a').format(_dDate);
+              }
             }
           }
 
@@ -625,6 +643,10 @@ class _DateTimePickerState extends FormFieldState<String> {
 
               if (widget.type == DateTimePickerType.dateTime && _sTime != '') {
                 lsMask = 'MMM d, yyyy - HH:mm';
+
+                if (!widget.use24HourFormat) {
+                  lsMask = 'MMM d, yyyy - hh:mm a';
+                }
               }
 
               _dateLabelController.text = DateFormat(lsMask).format(_dDate);
@@ -635,7 +657,7 @@ class _DateTimePickerState extends FormFieldState<String> {
           _tTime = TimeOfDay(
               hour: int.parse(llTime[0]), minute: int.parse(llTime[1]));
           _sTime = lsValue;
-          _timeLabelController.text = _sTime;
+          _timeLabelController.text = _sTime + _sPeriod;
         }
       }
     }
@@ -740,6 +762,15 @@ class _DateTimePickerState extends FormFieldState<String> {
     if (ltTimePicked != null) {
       String lsHour = ltTimePicked.hour.toString().padLeft(2, '0');
       String lsMinute = ltTimePicked.minute.toString().padLeft(2, '0');
+
+      if (ltTimePicked.period.index == 0 && lsHour == '12') {
+        lsHour = '00';
+      }
+
+      if (!widget.use24HourFormat) {
+        _sPeriod = ltTimePicked.period.index == 0 ? ' AM' : ' PM';
+      }
+
       _sTime = '$lsHour:$lsMinute';
       _tTime = ltTimePicked;
 
@@ -795,7 +826,8 @@ class _DateTimePickerState extends FormFieldState<String> {
         routeSettings: widget.routeSettings,
         builder: (BuildContext context, Widget child) {
           return MediaQuery(
-            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+            data: MediaQuery.of(context)
+                .copyWith(alwaysUse24HourFormat: widget.use24HourFormat),
             child: child,
           );
         },
@@ -804,8 +836,30 @@ class _DateTimePickerState extends FormFieldState<String> {
       if (ltTimePicked != null) {
         String lsHour = ltTimePicked.hour.toString().padLeft(2, '0');
         String lsMinute = ltTimePicked.minute.toString().padLeft(2, '0');
+
+        if (ltTimePicked.period.index == 0 && lsHour == '12') {
+          lsHour = '00';
+        }
+
+        if (!widget.use24HourFormat) {
+          _sPeriod = ltTimePicked.period.index == 0 ? ' AM' : ' PM';
+        }
+
         _sTime = '$lsHour:$lsMinute';
         _tTime = ltTimePicked;
+      } else {
+        String lsHour = _tTime.hour.toString().padLeft(2, '0');
+        String lsMinute = _tTime.minute.toString().padLeft(2, '0');
+
+        if (_tTime.period.index == 0 && lsHour == '12') {
+          lsHour = '00';
+        }
+
+        if (!widget.use24HourFormat) {
+          _sPeriod = _tTime.period.index == 0 ? ' AM' : ' PM';
+        }
+
+        _sTime = '$lsHour:$lsMinute';
       }
 
       String lsOldValue = _sValue;

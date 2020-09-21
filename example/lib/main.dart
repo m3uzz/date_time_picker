@@ -99,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: Icon(Icons.event),
                 dateLabelText: 'Date',
                 timeLabelText: "Hour",
+                //use24HourFormat: false,
                 selectableDayPredicate: (date) {
                   if (date.weekday == 6 || date.weekday == 7) {
                     return false;
@@ -114,13 +115,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               DateTimePicker(
                 type: DateTimePickerType.dateTime,
-                dateMask: 'd MMMM, yyyy - HH:mm',
+                dateMask: 'd MMMM, yyyy - hh:mm a',
                 controller: _controller2,
                 //initialValue: _initialValue,
                 firstDate: DateTime(2000),
                 lastDate: DateTime(2100),
                 //icon: Icon(Icons.event),
                 dateLabelText: 'Date Time',
+                use24HourFormat: false,
                 onChanged: (val) => setState(() => _valueChanged2 = val),
                 validator: (val) {
                   setState(() => _valueToValidate2 = val);
@@ -150,6 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 //initialValue: _initialValue,
                 icon: Icon(Icons.access_time),
                 timeLabelText: "Time",
+                //use24HourFormat: false,
                 onChanged: (val) => setState(() => _valueChanged4 = val),
                 validator: (val) {
                   setState(() => _valueToValidate4 = val);
