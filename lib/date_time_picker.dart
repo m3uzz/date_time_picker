@@ -540,17 +540,16 @@ class _DateTimePickerState extends FormFieldState<String> {
     }
 
     String lsValue = _effectiveController.text.trim();
-
+    String languageCode = widget.locale.languageCode;
     if (lsValue != null && lsValue != '' && lsValue != 'null') {
       if (widget.type != DateTimePickerType.time) {
         _dDate = DateTime.tryParse(lsValue);
         _tTime = TimeOfDay.fromDateTime(_dDate);
-
-        _sDate = DateFormat('yyyy-MM-dd').format(_dDate);
-        _sTime = DateFormat('HH:mm').format(_dDate);
+        _sDate = DateFormat('yyyy-MM-dd', languageCode).format(_dDate);
+        _sTime = DateFormat('HH:mm', languageCode).format(_dDate);
 
         if (!widget.use24HourFormat) {
-          _sTime = DateFormat('hh:mm a').format(_dDate);
+          _sTime = DateFormat('hh:mm a', languageCode).format(_dDate);
         }
 
         _timeLabelController.text = _sTime;
@@ -558,7 +557,7 @@ class _DateTimePickerState extends FormFieldState<String> {
 
         if (widget.dateMask != null && widget.dateMask != '') {
           _dateLabelController.text =
-              DateFormat(widget.dateMask).format(_dDate);
+              DateFormat(widget.dateMask, languageCode).format(_dDate);
         } else {
           String lsMask = 'MMM d, yyyy';
 
@@ -570,7 +569,8 @@ class _DateTimePickerState extends FormFieldState<String> {
             }
           }
 
-          _dateLabelController.text = DateFormat(lsMask).format(_dDate);
+          _dateLabelController.text =
+              DateFormat(lsMask, languageCode).format(_dDate);
         }
       } else {
         List<String> llTime = lsValue.split(':');
@@ -591,6 +591,7 @@ class _DateTimePickerState extends FormFieldState<String> {
   void didUpdateWidget(DateTimePicker oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    String languageCode = widget.locale.languageCode;
     if (widget.controller != oldWidget.controller) {
       oldWidget.controller?.removeListener(_handleControllerChanged);
       widget.controller?.addListener(_handleControllerChanged);
@@ -619,14 +620,14 @@ class _DateTimePickerState extends FormFieldState<String> {
           _dDate = DateTime.tryParse(lsValue);
 
           if (_dDate != null) {
-            _sDate = DateFormat('yyyy-MM-dd').format(_dDate);
+            _sDate = DateFormat('yyyy-MM-dd', languageCode).format(_dDate);
 
             if (lsOldTime != '') {
               _tTime = TimeOfDay.fromDateTime(_dDate);
-              _sTime = DateFormat('HH:mm').format(_dDate);
+              _sTime = DateFormat('HH:mm', languageCode).format(_dDate);
 
               if (!widget.use24HourFormat) {
-                _sTime = DateFormat('hh:mm a').format(_dDate);
+                _sTime = DateFormat('hh:mm a', languageCode).format(_dDate);
               }
             }
           }
@@ -637,7 +638,7 @@ class _DateTimePickerState extends FormFieldState<String> {
           if (_dDate != null) {
             if (widget.dateMask != null && widget.dateMask != '') {
               _dateLabelController.text =
-                  DateFormat(widget.dateMask).format(_dDate);
+                  DateFormat(widget.dateMask, languageCode).format(_dDate);
             } else {
               String lsMask = 'MMM d, yyyy';
 
@@ -649,7 +650,8 @@ class _DateTimePickerState extends FormFieldState<String> {
                 }
               }
 
-              _dateLabelController.text = DateFormat(lsMask).format(_dDate);
+              _dateLabelController.text =
+                  DateFormat(lsMask, languageCode).format(_dDate);
             }
           }
         } else {
@@ -715,19 +717,20 @@ class _DateTimePickerState extends FormFieldState<String> {
       routeSettings: widget.routeSettings,
     );
 
+    String languageCode = widget.locale.languageCode;
     if (ldDatePicked != null) {
-      _sDate = DateFormat('yyyy-MM-dd').format(ldDatePicked);
+      _sDate = DateFormat('yyyy-MM-dd', languageCode).format(ldDatePicked);
       _dDate = ldDatePicked;
       String lsOldValue = _sValue;
       _sValue = _sDate;
       String lsFormatedDate;
 
       if (widget.dateMask != null && widget.dateMask != '') {
-        lsFormatedDate =
-            DateFormat(widget.dateMask).format(DateTime.tryParse(_sDate));
+        lsFormatedDate = DateFormat(widget.dateMask, languageCode)
+            .format(DateTime.tryParse(_sDate));
       } else {
-        lsFormatedDate =
-            DateFormat('MMM dd, yyyy').format(DateTime.tryParse(_sDate));
+        lsFormatedDate = DateFormat('MMM dd, yyyy', languageCode)
+            .format(DateTime.tryParse(_sDate));
       }
 
       if (widget.type == DateTimePickerType.dateTimeSeparate && _sTime != '') {
@@ -815,8 +818,9 @@ class _DateTimePickerState extends FormFieldState<String> {
       routeSettings: widget.routeSettings,
     );
 
+    String languageCode = widget.locale.languageCode;
     if (ldDatePicked != null) {
-      _sDate = DateFormat('yyyy-MM-dd').format(ldDatePicked);
+      _sDate = DateFormat('yyyy-MM-dd', languageCode).format(ldDatePicked);
       _dDate = ldDatePicked;
 
       TimeOfDay ltTimePicked = await showTimePicker(
@@ -867,11 +871,12 @@ class _DateTimePickerState extends FormFieldState<String> {
       _sValue = _sValue.trim();
 
       if (widget.dateMask != null && widget.dateMask != '') {
-        lsFormatedDate =
-            DateFormat(widget.dateMask).format(DateTime.tryParse(_sValue));
+        lsFormatedDate = DateFormat(widget.dateMask, languageCode)
+            .format(DateTime.tryParse(_sValue));
       } else {
         String lsMask = _sTime != '' ? 'MMM dd, yyyy - HH:mm' : 'MMM dd, yyyy';
-        lsFormatedDate = DateFormat(lsMask).format(DateTime.tryParse(_sValue));
+        lsFormatedDate =
+            DateFormat(lsMask, languageCode).format(DateTime.tryParse(_sValue));
       }
 
       _dateLabelController.text = lsFormatedDate;
