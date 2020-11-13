@@ -100,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 dateLabelText: 'Date',
                 timeLabelText: "Hour",
                 //use24HourFormat: false,
+                //locale: Locale('pt', 'BR'),
                 selectableDayPredicate: (date) {
                   if (date.weekday == 6 || date.weekday == 7) {
                     return false;
@@ -123,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 //icon: Icon(Icons.event),
                 dateLabelText: 'Date Time',
                 use24HourFormat: false,
+                locale: Locale('en', 'US'),
                 onChanged: (val) => setState(() => _valueChanged2 = val),
                 validator: (val) {
                   setState(() => _valueToValidate2 = val);
@@ -139,6 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 lastDate: DateTime(2100),
                 icon: Icon(Icons.event),
                 dateLabelText: 'Date',
+                //locale: Locale('en', 'US'),
                 onChanged: (val) => setState(() => _valueChanged3 = val),
                 validator: (val) {
                   setState(() => _valueToValidate3 = val);
@@ -153,6 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: Icon(Icons.access_time),
                 timeLabelText: "Time",
                 //use24HourFormat: false,
+                //locale: Locale('en', 'US'),
                 onChanged: (val) => setState(() => _valueChanged4 = val),
                 validator: (val) {
                   setState(() => _valueToValidate4 = val);
