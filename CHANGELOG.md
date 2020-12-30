@@ -1,3 +1,7 @@
+## 1.1.1 - 2020-12-29
+
+* Removing flutter_localizations dependency
+  
 ## 1.1.0 - 2020-11-12
 
 * Improved use of the local parameter to define DateTimePicker directly.
