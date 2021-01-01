@@ -138,6 +138,8 @@ class DateTimePicker extends FormField<String> {
     this.controller,
     this.firstDate,
     this.lastDate,
+    this.initialDate,
+    this.initialTime,
     this.dateMask,
     this.icon,
     this.dateLabelText,
@@ -384,6 +386,12 @@ class DateTimePicker extends FormField<String> {
   /// The latest allowable [DateTime] that the user can select.
   final DateTime lastDate;
 
+  /// The initial date to be used for the date picker if initialValue is null or empty
+  final DateTime initialDate;
+
+  /// The initial time to be used for the time picker if initialValue is null or empty
+  final TimeOfDay initialTime;
+
   /// For forms that match one of our predefined skeletons, we look up the
   /// corresponding pattern in [locale] (or in the default locale if none is
   /// specified) and use the resulting full format string. This is the
@@ -533,6 +541,9 @@ class _DateTimePickerState extends FormFieldState<String> {
   @override
   void initState() {
     super.initState();
+
+    _dDate = widget.initialDate ?? DateTime.now();
+    _tTime = widget.initialTime ?? TimeOfDay.now();
 
     if (widget.controller == null) {
       _stateController = TextEditingController(text: widget.initialValue);
