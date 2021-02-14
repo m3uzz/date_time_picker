@@ -177,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SelectableText(_valueChanged3),
               SelectableText(_valueChanged4),
               SizedBox(height: 10),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   final loForm = _oFormKey.currentState;
 
@@ -208,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SelectableText(_valueSaved3),
               SelectableText(_valueSaved4),
               SizedBox(height: 20),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   final loForm = _oFormKey.currentState;
                   loForm?.reset();
