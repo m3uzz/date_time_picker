@@ -30,15 +30,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   GlobalKey<FormState> _oFormKey = GlobalKey<FormState>();
-  TextEditingController _controller1 =
-      TextEditingController(text: DateTime.now().toString());
-  TextEditingController _controller2 =
-      TextEditingController(text: DateTime.now().toString());
-  TextEditingController _controller3 =
-      TextEditingController(text: DateTime.now().toString());
-  TextEditingController _controller4 = TextEditingController(
-      text:
-          '${TimeOfDay.now().hour.toString().padLeft(2, '0')}:${TimeOfDay.now().minute.toString().padLeft(2, '0')}');
+  late TextEditingController _controller1;
+  late TextEditingController _controller2;
+  late TextEditingController _controller3;
+  late TextEditingController _controller4;
 
   //String _initialValue;
   String _valueChanged1 = '';
@@ -59,6 +54,13 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     Intl.defaultLocale = 'pt_BR';
     //_initialValue = DateTime.now().toString();
+    _controller1 = TextEditingController(text: DateTime.now().toString());
+    _controller2 = TextEditingController(text: DateTime.now().toString());
+    _controller3 = TextEditingController(text: DateTime.now().toString());
+
+    String lsHour = TimeOfDay.now().hour.toString().padLeft(2, '0');
+    String lsMinute = TimeOfDay.now().minute.toString().padLeft(2, '0');
+    _controller4 = TextEditingController(text: '$lsHour:$lsMinute');
 
     _getValue();
   }
