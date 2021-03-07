@@ -377,10 +377,10 @@ class DateTimePicker extends FormField<String> {
   final DateTime? lastDate;
 
   /// The initial date to be used for the date picker if initialValue is null or empty
-  final DateTime initialDate;
+  final DateTime? initialDate;
 
   /// The initial time to be used for the time picker if initialValue is null or empty
-  final TimeOfDay initialTime;
+  final TimeOfDay? initialTime;
 
   /// For forms that match one of our predefined skeletons, we look up the
   /// corresponding pattern in [locale] (or in the default locale if none is
