@@ -1,6 +1,13 @@
+## 2.0.0 - 2021-03-09
+
+* Migrate to null safety.
+* Update SDK constraints to >=2.12.0 <3.0.0 based on beta release guidelines.
+* Updata intl version dependency.
+* Add 2 optional params, initialDate and initialTime to set date picker and time picker to show date and time diferent of now, when initialValue is empty.
+  
 ## 1.1.1 - 2020-12-29
 
-* Removing flutter_localizations dependency
+* Removing flutter_localizations dependency.
   
 ## 1.1.0 - 2020-11-12
 
@@ -12,9 +19,9 @@
 
 ## 1.0.1 - 2020-08-18
 
-* Fix issue #2 - just reference in README.md
+* Fix issue #2 - just reference in README.md.
 * Fix issue #3 - filling the time field when press Ok button on time picker dialog without select a specific time, getting the current time showed.
-* Fix problems when initialValue is empty
+* Fix problems when initialValue is empty.
 
 ## 1.0.0 - 2020-07-22
 
