@@ -18,15 +18,17 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0-0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
-    sdk: flutter    
+    sdk: flutter
+  intl: ^0.17.0-nullsafety.2
   
-  date_time_picker: ^1.1.1
+  date_time_picker:
+    path: ..
     
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

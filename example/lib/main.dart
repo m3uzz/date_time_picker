@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -29,10 +30,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   GlobalKey<FormState> _oFormKey = GlobalKey<FormState>();
-  TextEditingController _controller1;
-  TextEditingController _controller2;
-  TextEditingController _controller3;
-  TextEditingController _controller4;
+  late TextEditingController _controller1;
+  late TextEditingController _controller2;
+  late TextEditingController _controller3;
+  late TextEditingController _controller4;
+
   //String _initialValue;
   String _valueChanged1 = '';
   String _valueToValidate1 = '';
@@ -109,10 +111,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 onChanged: (val) => setState(() => _valueChanged1 = val),
                 validator: (val) {
-                  setState(() => _valueToValidate1 = val);
+                  setState(() => _valueToValidate1 = val ?? '');
                   return null;
                 },
-                onSaved: (val) => setState(() => _valueSaved1 = val),
+                onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
               ),
               DateTimePicker(
                 type: DateTimePickerType.dateTime,
@@ -127,10 +129,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 locale: Locale('en', 'US'),
                 onChanged: (val) => setState(() => _valueChanged2 = val),
                 validator: (val) {
-                  setState(() => _valueToValidate2 = val);
+                  setState(() => _valueToValidate2 = val ?? '');
                   return null;
                 },
-                onSaved: (val) => setState(() => _valueSaved2 = val),
+                onSaved: (val) => setState(() => _valueSaved2 = val ?? ''),
               ),
               DateTimePicker(
                 type: DateTimePickerType.date,
@@ -144,10 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 //locale: Locale('en', 'US'),
                 onChanged: (val) => setState(() => _valueChanged3 = val),
                 validator: (val) {
-                  setState(() => _valueToValidate3 = val);
+                  setState(() => _valueToValidate3 = val ?? '');
                   return null;
                 },
-                onSaved: (val) => setState(() => _valueSaved3 = val),
+                onSaved: (val) => setState(() => _valueSaved3 = val ?? ''),
               ),
               DateTimePicker(
                 type: DateTimePickerType.time,
@@ -159,10 +161,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 //locale: Locale('en', 'US'),
                 onChanged: (val) => setState(() => _valueChanged4 = val),
                 validator: (val) {
-                  setState(() => _valueToValidate4 = val);
+                  setState(() => _valueToValidate4 = val ?? '');
                   return null;
                 },
-                onSaved: (val) => setState(() => _valueSaved4 = val),
+                onSaved: (val) => setState(() => _valueSaved4 = val ?? ''),
               ),
               SizedBox(height: 20),
               Text(
@@ -170,17 +172,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              SelectableText(_valueChanged1 ?? ''),
-              SelectableText(_valueChanged2 ?? ''),
-              SelectableText(_valueChanged3 ?? ''),
-              SelectableText(_valueChanged4 ?? ''),
+              SelectableText(_valueChanged1),
+              SelectableText(_valueChanged2),
+              SelectableText(_valueChanged3),
+              SelectableText(_valueChanged4),
               SizedBox(height: 10),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   final loForm = _oFormKey.currentState;
 
-                  if (loForm.validate()) {
-                    loForm.save();
+                  if (loForm?.validate() == true) {
+                    loForm?.save();
                   }
                 },
                 child: Text('Submit'),
@@ -191,25 +193,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              SelectableText(_valueToValidate1 ?? ''),
-              SelectableText(_valueToValidate2 ?? ''),
-              SelectableText(_valueToValidate3 ?? ''),
-              SelectableText(_valueToValidate4 ?? ''),
+              SelectableText(_valueToValidate1),
+              SelectableText(_valueToValidate2),
+              SelectableText(_valueToValidate3),
+              SelectableText(_valueToValidate4),
               SizedBox(height: 10),
               Text(
                 'DateTimePicker data value onSaved:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              SelectableText(_valueSaved1 ?? ''),
-              SelectableText(_valueSaved2 ?? ''),
-              SelectableText(_valueSaved3 ?? ''),
-              SelectableText(_valueSaved4 ?? ''),
+              SelectableText(_valueSaved1),
+              SelectableText(_valueSaved2),
+              SelectableText(_valueSaved3),
+              SelectableText(_valueSaved4),
               SizedBox(height: 20),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   final loForm = _oFormKey.currentState;
-                  loForm.reset();
+                  loForm?.reset();
 
                   setState(() {
                     _valueChanged1 = '';
