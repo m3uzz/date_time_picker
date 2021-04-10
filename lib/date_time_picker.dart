@@ -743,6 +743,16 @@ class _DateTimePickerState extends FormFieldState<String> {
     }
   }
 
+  void set12HourTimeValues(final TimeOfDay ltTimePicked) {
+    final now = DateTime.now();
+    final time = DateTime(
+        now.year, now.month, now.day, ltTimePicked.hour, ltTimePicked.minute);
+    final lsHour = DateFormat("hh", widget.locale.toString()).format(time);
+    final lsMinute = DateFormat("mm", widget.locale.toString()).format(time);
+    _sTime = '$lsHour:$lsMinute';
+    _sPeriod = ltTimePicked.period.index == 0 ? ' AM' : ' PM';
+  }
+
   Future<void> _showTimePickerDialog() async {
     final ltTimePicked = await showTimePicker(
       context: context,
@@ -759,18 +769,19 @@ class _DateTimePickerState extends FormFieldState<String> {
     );
 
     if (ltTimePicked != null) {
-      var lsHour = ltTimePicked.hour.toString().padLeft(2, '0');
-      final lsMinute = ltTimePicked.minute.toString().padLeft(2, '0');
+      var lsHour = ltTimePicked.minute.toString().padLeft(2, '0');
+      var lsMinute = ltTimePicked.minute.toString().padLeft(2, '0');
 
       if (ltTimePicked.period.index == 0 && lsHour == '12') {
         lsHour = '00';
       }
 
       if (!widget.use24HourFormat) {
-        _sPeriod = ltTimePicked.period.index == 0 ? ' AM' : ' PM';
+        set12HourTimeValues(ltTimePicked);
+      } else {
+        _sTime = '$lsHour:$lsMinute';
       }
 
-      _sTime = '$lsHour:$lsMinute';
       _tTime = ltTimePicked;
 
       _timeLabelController.text = _sTime;
@@ -842,10 +853,11 @@ class _DateTimePickerState extends FormFieldState<String> {
         }
 
         if (!widget.use24HourFormat) {
-          _sPeriod = ltTimePicked.period.index == 0 ? ' AM' : ' PM';
+          set12HourTimeValues(ltTimePicked);
+        } else {
+          _sTime = '$lsHour:$lsMinute';
         }
 
-        _sTime = '$lsHour:$lsMinute';
         _tTime = ltTimePicked;
       } else {
         var lsHour = _tTime.hour.toString().padLeft(2, '0');
