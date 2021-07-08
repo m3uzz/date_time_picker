@@ -660,6 +660,9 @@ class _DateTimePickerState extends FormFieldState<String> {
           _timeLabelController.text = _sTime + _sPeriod;
         }
       }
+    }else{
+      _dateLabelController.clear();
+      _timeLabelController.clear();
     }
   }
 
