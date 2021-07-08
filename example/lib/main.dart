@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [Locale('pt', 'BR')],
+      supportedLocales: [Locale('en', 'US')], //, Locale('pt', 'BR')],
     );
   }
 }
@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _controller3;
   late TextEditingController _controller4;
 
-  //String _initialValue;
+  //String _initialValue = '';
   String _valueChanged1 = '';
   String _valueToValidate1 = '';
   String _valueSaved1 = '';
@@ -136,14 +136,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               DateTimePicker(
                 type: DateTimePickerType.date,
-                dateMask: 'yyyy/MM/dd',
+                //dateMask: 'yyyy/MM/dd',
                 controller: _controller3,
                 //initialValue: _initialValue,
                 firstDate: DateTime(2000),
                 lastDate: DateTime(2100),
                 icon: Icon(Icons.event),
                 dateLabelText: 'Date',
-                //locale: Locale('en', 'US'),
+                locale: Locale('pt', 'BR'),
                 onChanged: (val) => setState(() => _valueChanged3 = val),
                 validator: (val) {
                   setState(() => _valueToValidate3 = val ?? '');
@@ -153,12 +153,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               DateTimePicker(
                 type: DateTimePickerType.time,
-                controller: _controller4,
-                //initialValue: _initialValue,
+                //timePickerEntryModeInput: true,
+                //controller: _controller4,
+                initialValue: '', //_initialValue,
                 icon: Icon(Icons.access_time),
                 timeLabelText: "Time",
-                //use24HourFormat: false,
-                //locale: Locale('en', 'US'),
+                use24HourFormat: false,
+                locale: Locale('pt', 'BR'),
                 onChanged: (val) => setState(() => _valueChanged4 = val),
                 validator: (val) {
                   setState(() => _valueToValidate4 = val ?? '');
@@ -227,6 +228,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     _valueSaved3 = '';
                     _valueSaved4 = '';
                   });
+
+                  _controller1.clear();
+                  _controller2.clear();
+                  _controller3.clear();
+                  _controller4.clear();
                 },
                 child: Text('Reset'),
               ),

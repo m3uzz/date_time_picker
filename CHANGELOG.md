@@ -1,3 +1,9 @@
+## 2.1.0 - 2021-07-08
+
+* Fixed 12h display format.
+* Fixed field cleaning.
+* Added a new parameter (timePickerEntryModeInput) to set timepicker mode, dial or input.
+
 ## 2.0.0 - 2021-03-09
 
 * Migrate to null safety.

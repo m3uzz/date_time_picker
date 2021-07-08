@@ -164,6 +164,7 @@ class DateTimePicker extends FormField<String> {
     this.routeSettings,
     this.use24HourFormat = true,
     this.timeFieldWidth,
+    this.timePickerEntryModeInput = false,
     String? initialValue,
     FocusNode? focusNode,
     InputDecoration? decoration,
@@ -504,6 +505,8 @@ class DateTimePicker extends FormField<String> {
   /// The width for time text field when DateTimePickerType is dateTimeSeparated.
   final double? timeFieldWidth;
 
+  final bool timePickerEntryModeInput;
+
   final ValueChanged<String>? onChanged;
 
   @override
@@ -531,17 +534,22 @@ class _DateTimePickerState extends FormFieldState<String> {
   void initState() {
     super.initState();
 
-    _dDate = widget.initialDate ?? DateTime.now();
-    _tTime = widget.initialTime ?? TimeOfDay.now();
-
     if (widget.controller == null) {
       _stateController = TextEditingController(text: widget.initialValue);
     } else {
       widget.controller?.addListener(_handleControllerChanged);
     }
 
+    initValues();
+  }
+
+  void initValues() {
+    _dDate = widget.initialDate ?? DateTime.now();
+    _tTime = widget.initialTime ?? TimeOfDay.now();
+
     final lsValue = _effectiveController?.text.trim();
     final languageCode = widget.locale?.languageCode;
+
     if (lsValue != null && lsValue != '' && lsValue != 'null') {
       if (widget.type != DateTimePickerType.time) {
         _dDate = DateTime.tryParse(lsValue) ?? DateTime.now();
@@ -591,8 +599,8 @@ class _DateTimePickerState extends FormFieldState<String> {
   @override
   void didUpdateWidget(DateTimePicker oldWidget) {
     super.didUpdateWidget(oldWidget);
-
     final languageCode = widget.locale?.languageCode;
+
     if (widget.controller != oldWidget.controller) {
       oldWidget.controller?.removeListener(_handleControllerChanged);
       widget.controller?.addListener(_handleControllerChanged);
@@ -660,9 +668,11 @@ class _DateTimePickerState extends FormFieldState<String> {
           _timeLabelController.text = _sTime + _sPeriod;
         }
       }
-    }else{
+    } else {
       _dateLabelController.clear();
       _timeLabelController.clear();
+
+      initValues();
     }
   }
 
@@ -746,20 +756,24 @@ class _DateTimePickerState extends FormFieldState<String> {
     }
   }
 
-  void set12HourTimeValues(final TimeOfDay ltTimePicked) {
-    final now = DateTime.now();
-    final time = DateTime(
-        now.year, now.month, now.day, ltTimePicked.hour, ltTimePicked.minute);
-    final lsHour = DateFormat("hh", widget.locale.toString()).format(time);
-    final lsMinute = DateFormat("mm", widget.locale.toString()).format(time);
+  void set12HourTimeValues(final TimeOfDay ptTimePicked) {
+    final ldNow = DateTime.now();
+    final ldTime = DateTime(ldNow.year, ldNow.month, ldNow.day,
+        ptTimePicked.hour, ptTimePicked.minute);
+    final lsHour = DateFormat("hh", widget.locale.toString()).format(ldTime);
+    final lsMinute = DateFormat("mm", widget.locale.toString()).format(ldTime);
+
     _sTime = '$lsHour:$lsMinute';
-    _sPeriod = ltTimePicked.period.index == 0 ? ' AM' : ' PM';
+    _sPeriod = ptTimePicked.period.index == 0 ? ' AM' : ' PM';
   }
 
   Future<void> _showTimePickerDialog() async {
     final ltTimePicked = await showTimePicker(
       context: context,
       initialTime: _tTime,
+      initialEntryMode: widget.timePickerEntryModeInput
+          ? TimePickerEntryMode.input
+          : TimePickerEntryMode.dial,
       useRootNavigator: widget.useRootNavigator,
       routeSettings: widget.routeSettings,
       builder: (BuildContext context, Widget? child) {
@@ -772,7 +786,7 @@ class _DateTimePickerState extends FormFieldState<String> {
     );
 
     if (ltTimePicked != null) {
-      var lsHour = ltTimePicked.minute.toString().padLeft(2, '0');
+      var lsHour = ltTimePicked.hour.toString().padLeft(2, '0');
       var lsMinute = ltTimePicked.minute.toString().padLeft(2, '0');
 
       if (ltTimePicked.period.index == 0 && lsHour == '12') {
@@ -836,6 +850,9 @@ class _DateTimePickerState extends FormFieldState<String> {
       final ltTimePicked = await showTimePicker(
         context: context,
         initialTime: _tTime,
+        initialEntryMode: widget.timePickerEntryModeInput
+            ? TimePickerEntryMode.input
+            : TimePickerEntryMode.dial,
         useRootNavigator: widget.useRootNavigator,
         routeSettings: widget.routeSettings,
         builder: (BuildContext context, Widget? child) {
@@ -849,7 +866,7 @@ class _DateTimePickerState extends FormFieldState<String> {
 
       if (ltTimePicked != null) {
         var lsHour = ltTimePicked.hour.toString().padLeft(2, '0');
-        final lsMinute = ltTimePicked.minute.toString().padLeft(2, '0');
+        var lsMinute = ltTimePicked.minute.toString().padLeft(2, '0');
 
         if (ltTimePicked.period.index == 0 && lsHour == '12') {
           lsHour = '00';

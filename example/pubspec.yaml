@@ -28,7 +28,7 @@ dependencies:
 
   intl: ^0.17.0
   
-  date_time_picker: #^2.0.0
+  date_time_picker: #^2.1.0
     path: ../
     
   # The following adds the Cupertino Icons font to your application.
