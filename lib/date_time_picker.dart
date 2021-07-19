@@ -4,6 +4,8 @@
 
 library date_time_picker;
 
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -582,18 +584,51 @@ class _DateTimePickerState extends FormFieldState<String> {
               DateFormat(lsMask, languageCode).format(_dDate);
         }
       } else {
-        final llTime = lsValue.split(':');
-        _tTime =
-            TimeOfDay(hour: int.parse(llTime[0]), minute: int.parse(llTime[1]));
+        final llTime = lsValue.split(RegExp(r'[:, \s]'));
+        if (llTime.length == 3) {
+          // if case when string in hh:mm a format
+          _tTime = _getTimeOfDay12HrsFormat(
+            llTime[0],
+            llTime[1],
+            llTime[2],
+          );
+        } else {
+          // when format is HH:mm
+          _tTime = TimeOfDay(
+            hour: int.parse(llTime[0]),
+            minute: int.parse(llTime[1]),
+          );
+        }
+
         _sTime = lsValue;
 
         if (!widget.use24HourFormat) {
-          _sPeriod = _tTime.period.index == 0 ? ' AM' : ' PM';
+          set12HourTimeValues(_tTime);
         }
+
+        _effectiveController?.text = _sTime + _sPeriod;
 
         _timeLabelController.text = _sTime + _sPeriod;
       }
     }
+  }
+
+  TimeOfDay _getTimeOfDay12HrsFormat(
+    String hourStr,
+    String minuteStr,
+    String periodStr,
+  ) {
+    var hour = int.parse(hourStr);
+    if (periodStr == 'PM') {
+      hour = hour == 12 ? 12 : hour + 12;
+    }
+    if (periodStr == 'AM' && hour == 12) {
+      hour = 0;
+    }
+
+    final minute = int.parse(minuteStr);
+
+    return TimeOfDay(hour: hour, minute: minute);
   }
 
   @override
@@ -661,10 +696,22 @@ class _DateTimePickerState extends FormFieldState<String> {
                 DateFormat(lsMask, languageCode).format(_dDate);
           }
         } else {
-          final llTime = lsValue.split(':');
-          _tTime = TimeOfDay(
-              hour: int.parse(llTime[0]), minute: int.parse(llTime[1]));
-          _sTime = lsValue;
+          final llTime = lsValue.split(RegExp(r'[:, \s]'));
+          if (llTime.length == 3) {
+            // in case when string in hh:mm a format
+            _tTime = _getTimeOfDay12HrsFormat(
+              llTime[0],
+              llTime[1],
+              llTime[2],
+            );
+          } else {
+            // when format is HH:mm
+            _tTime = TimeOfDay(
+              hour: int.parse(llTime[0]),
+              minute: int.parse(llTime[1]),
+            );
+          }
+          _sTime = '${llTime[0]}:${llTime[1]}';
           _timeLabelController.text = _sTime + _sPeriod;
         }
       }
@@ -801,12 +848,12 @@ class _DateTimePickerState extends FormFieldState<String> {
 
       _tTime = ltTimePicked;
 
-      _timeLabelController.text = _sTime;
+      _timeLabelController.text = _sTime + _sPeriod;
       final lsOldValue = _sValue;
-      _sValue = _sTime;
+      _sValue = _sTime + _sPeriod;
 
       if (widget.type == DateTimePickerType.dateTimeSeparate && _sDate != '') {
-        _sValue = '$_sDate $_sTime';
+        _sValue = '$_sDate $_sTime $_sPeriod';
       }
 
       _sValue = _sValue.trim();
