@@ -850,14 +850,14 @@ class _DateTimePickerState extends FormFieldState<String> {
 
       _timeLabelController.text = _sTime + _sPeriod;
       final lsOldValue = _sValue;
-      _sValue = _sTime;
+      _sValue = _sTime + _sPeriod;
 
       if (widget.type == DateTimePickerType.dateTimeSeparate && _sDate != '') {
-        _sValue = '$_sDate $_sTime';
+        _sValue = '$_sDate $_sTime $_sPeriod';
       }
 
       _sValue = _sValue.trim();
-      _effectiveController?.text = _sValue + _sPeriod;
+      _effectiveController?.text = _sValue;
 
       if (_sValue != lsOldValue) {
         onChangedHandler(_sValue);
