@@ -31,7 +31,7 @@ There are four presentations for DateTimePicker and can be defined in the type p
 * `DateTimePickerType.date` will present a text field with the action tap showing a datePicker dialog box;
 * `DateTimePickerType.time` will present a text field with the action tap showing a timePicker dialog box;
 * `DateTimePickerType.dateTime` will present a text field with the action tap showing a datePicker dialog box then a timePicker dialog box;
-* `DateTimePickerType.dateTimeSeparated` will display two text fields side by side, the first for date and the second for time. Each displaying their respective dialog box, datePicker and timePicker in the tap action;
+* `DateTimePickerType.dateTimeSeparate` will display two text fields side by side, the first for date and the second for time. Each displaying their respective dialog box, datePicker and timePicker in the tap action;
   
 ``` dart
 DateTimePicker(
