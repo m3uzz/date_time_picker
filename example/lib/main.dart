@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [Locale('en', 'US')], //, Locale('pt', 'BR')],
+      supportedLocales: [Locale('en', 'US'), Locale('ar', 'SY')],
     );
   }
 }
@@ -68,15 +68,15 @@ class _MyHomePageState extends State<MyHomePage> {
   /// This implementation is just to simulate a load data behavior
   /// from a data base sqlite or from a API
   Future<void> _getValue() async {
-    await Future.delayed(const Duration(seconds: 3), () {
-      setState(() {
-        //_initialValue = '2000-10-22 14:30';
-        _controller1.text = '2000-09-20 14:30';
-        _controller2.text = '2001-10-21 15:31';
-        _controller3.text = '2002-11-22';
-        _controller4.text = '17:01';
-      });
-    });
+    // await Future.delayed(const Duration(seconds: 3), () {
+    //   setState(() {
+    //     //_initialValue = '2000-10-22 14:30';
+    //     _controller1.text = '2000-09-20 14:30';
+    //     _controller2.text = '2001-10-21 15:31';
+    //     _controller3.text = '2002-11-22';
+    //     _controller4.text = '17:01';
+    //   });
+    // });
   }
 
   @override
@@ -143,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 lastDate: DateTime(2100),
                 icon: Icon(Icons.event),
                 dateLabelText: 'Date',
-                locale: Locale('pt', 'BR'),
+                locale: Locale('ar', 'SY'),
                 onChanged: (val) => setState(() => _valueChanged3 = val),
                 validator: (val) {
                   setState(() => _valueToValidate3 = val ?? '');
@@ -155,11 +155,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 type: DateTimePickerType.time,
                 //timePickerEntryModeInput: true,
                 //controller: _controller4,
-                initialValue: '', //_initialValue,
+                // initialValue: '',
+                //_initialValue,
+                initialValue: '12:12 AM',
                 icon: Icon(Icons.access_time),
                 timeLabelText: "Time",
                 use24HourFormat: false,
-                locale: Locale('pt', 'BR'),
+                locale: Locale('ar', 'SY'),
                 onChanged: (val) => setState(() => _valueChanged4 = val),
                 validator: (val) {
                   setState(() => _valueToValidate4 = val ?? '');
