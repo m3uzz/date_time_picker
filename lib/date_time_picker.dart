@@ -896,6 +896,19 @@ class _DateTimePickerState extends FormFieldState<String> {
 
       final lsOldValue = _sValue;
       _sValue = '$_sDate $_sTime';
+      // _sValue needs to maintain the true datetime value
+      // DateTime.tryParse() requires the time component of datetime string in 24 hour format
+      // but _sValue could be in 12 hour format. So, we need to convert it to 24 hour format.
+      List<String> hourMinute = _sTime.split(':');
+      String minute = int.parse(hourMinute[1]).toString().padLeft(2, '0');
+      if (_tTime.period == DayPeriod.pm) {
+        String hour = ((int.parse(hourMinute[0]) % 12) + 12).toString().padLeft(2, '0');
+        _sValue = '$_sDate $hour:$minute';
+      } else {
+        // ensure we don't have a leading 12 hour for AM time
+        String hour = (int.parse(hourMinute[0]) % 12).toString().padLeft(2, '0');
+        _sValue = '$_sDate $hour:$minute';
+      }
       _sValue = _sValue.trim();
 
       if (widget.dateMask != null && widget.dateMask != '') {
