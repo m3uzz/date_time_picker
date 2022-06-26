@@ -806,7 +806,7 @@ class _DateTimePickerState extends FormFieldState<String> {
       _sValue = _sTime;
 
       if (widget.type == DateTimePickerType.dateTimeSeparate && _sDate != '') {
-        _sValue = '$_sDate $_sTime';
+        _sValue = '$_sDate $_sTime ${_sPeriod.trim()}';
       }
 
       _sValue = _sValue.trim();
@@ -895,12 +895,13 @@ class _DateTimePickerState extends FormFieldState<String> {
       }
 
       final lsOldValue = _sValue;
-      _sValue = '$_sDate $_sTime';
+      _sValue = '$_sDate $_sTime ${_sPeriod.trim()}';
       _sValue = _sValue.trim();
 
       if (widget.dateMask != null && widget.dateMask != '') {
+        DateFormat formatter = DateFormat(r'''yyyy-dd-MM hh:mm a''');
         lsFormatedDate = DateFormat(widget.dateMask, languageCode)
-            .format(DateTime.tryParse(_sValue)!);
+            .format(formatter.tryParse(_sValue)!);
       } else {
         final lsMask = _sTime != '' ? 'MMM dd, yyyy - HH:mm' : 'MMM dd, yyyy';
         lsFormatedDate = DateFormat(lsMask, languageCode)
@@ -913,6 +914,17 @@ class _DateTimePickerState extends FormFieldState<String> {
       if (_sValue != lsOldValue) {
         onChangedHandler(_sValue);
       }
+    }
+  }
+}
+
+/// Extend DateFormat with TryParse method.
+extension DateFormatTryParse on DateFormat {
+  DateTime? tryParse(String inputString, [bool utc = false]) {
+    try {
+      return parse(inputString, utc);
+    } on FormatException {
+      return null;
     }
   }
 }
