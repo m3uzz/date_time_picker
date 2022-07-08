@@ -805,6 +805,11 @@ class _DateTimePickerState extends FormFieldState<String> {
       final lsOldValue = _sValue;
       _sValue = _sTime;
 
+      if (_sDate == '') {
+        _sDate = DateFormat('yyyy-MM-dd', widget.locale.toString())
+            .format(DateTime.now());
+      }
+
       if (widget.type == DateTimePickerType.dateTimeSeparate && _sDate != '') {
         _sValue = '$_sDate $_sTime ${_sPeriod.trim()}';
       }
