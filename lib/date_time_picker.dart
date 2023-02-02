@@ -669,11 +669,19 @@ class _DateTimePickerState extends FormFieldState<String> {
         }
       }
     } else {
-      _dateLabelController.clear();
-      _timeLabelController.clear();
-
-      initValues();
+      clearSelection();
     }
+  }
+
+  // Clear the date/time selection.
+  void clearSelection() {
+    _dateLabelController.clear();
+    _timeLabelController.clear();
+    _effectiveController?.clear();
+
+    _sDate = "";
+    _sTime = "";
+    initValues();
   }
 
   @override
