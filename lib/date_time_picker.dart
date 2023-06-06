@@ -133,7 +133,7 @@ class DateTimePicker extends FormField<String> {
   /// to [initialValue] or the empty string.
   ///
   /// For documentation about the various parameters, see the [TextField] class
-  /// and [new TextField], the constructor.
+  /// and [TextField], the constructor.
   DateTimePicker({
     Key? key,
     this.type = DateTimePickerType.date,
@@ -177,7 +177,7 @@ class DateTimePicker extends FormField<String> {
     TextAlignVertical? textAlignVertical,
     bool autofocus = false,
     bool readOnly = false,
-    ToolbarOptions? toolbarOptions,
+    //ToolbarOptions? toolbarOptions,
     bool showCursor = false,
     bool obscureText = false,
     bool autocorrect = true,
@@ -306,7 +306,7 @@ class DateTimePicker extends FormField<String> {
                 //textDirection: textDirection,
                 textCapitalization: textCapitalization,
                 autofocus: autofocus,
-                toolbarOptions: toolbarOptions,
+                //toolbarOptions: toolbarOptions,
                 showCursor: showCursor,
                 obscureText: obscureText,
                 autocorrect: autocorrect,
