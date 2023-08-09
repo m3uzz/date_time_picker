@@ -1,6 +1,6 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 
 void main() {
   testWidgets('Testing instantiate DateTimePicker',
