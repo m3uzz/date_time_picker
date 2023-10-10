@@ -1,3 +1,10 @@
+## 2.1.1 - 2023-10-10
+
+* Improve Code.
+* Updated to latest flutter version.
+* Fixed the example.
+* Update ToolbarOptions to AdaptiveTextSelectionToolbar
+
 ## 2.1.0 - 2021-07-08
 
 * Fixed 12h display format.
