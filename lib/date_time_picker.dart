@@ -177,7 +177,7 @@ class DateTimePicker extends FormField<String> {
     TextAlignVertical? textAlignVertical,
     bool autofocus = false,
     bool readOnly = false,
-    ToolbarOptions? toolbarOptions,
+    // ToolbarOptions? toolbarOptions,
     contextMenuBuilder,
     bool showCursor = false,
     bool obscureText = false,
